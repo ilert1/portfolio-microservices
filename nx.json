@@ -15,6 +15,10 @@
     ],
     "sharedGlobals": []
   },
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "libs"
+  },
   "plugins": [
     {
       "plugin": "@nx/webpack/plugin",
@@ -35,7 +39,17 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/portfolioMicroservices-e2e/**/*"]
+      "exclude": [
+        "apps/portfolioMicroservices-e2e/**/*",
+        "apps/accounts-e2e/**/*"
+      ]
     }
-  ]
+  ],
+  "targetDefaults": {
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    }
+  }
 }

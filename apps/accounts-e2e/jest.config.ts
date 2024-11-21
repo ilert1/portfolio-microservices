@@ -1,5 +1,5 @@
 export default {
-  displayName: 'portfolioMicroservices-e2e',
+  displayName: 'accounts-e2e',
   preset: '../../jest.preset.js',
   globalSetup: '<rootDir>/src/support/global-setup.ts',
   globalTeardown: '<rootDir>/src/support/global-teardown.ts',
@@ -14,5 +14,5 @@ export default {
     ],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/portfolioMicroservices-e2e',
+  coverageDirectory: '../../coverage/accounts-e2e',
 };

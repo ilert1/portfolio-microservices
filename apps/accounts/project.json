@@ -1,7 +1,7 @@
 {
-  "name": "portfolioMicroservices",
+  "name": "accounts",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/portfolioMicroservices/src",
+  "sourceRoot": "apps/accounts/src",
   "projectType": "application",
   "tags": [],
   "targets": {
@@ -10,15 +10,15 @@
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
-        "buildTarget": "portfolioMicroservices:build",
+        "buildTarget": "accounts:build",
         "runBuildTargetDependencies": false
       },
       "configurations": {
         "development": {
-          "buildTarget": "portfolioMicroservices:build:development"
+          "buildTarget": "accounts:build:development"
         },
         "production": {
-          "buildTarget": "portfolioMicroservices:build:production"
+          "buildTarget": "accounts:build:production"
         }
       }
     }
