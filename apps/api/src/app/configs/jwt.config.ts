@@ -6,7 +6,7 @@ export function getJwtConfig(): JwtModuleAsyncOptions {
         imports: [ConfigModule],
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => ({
-            secret: configService.get('JWT_SECRET')
+            secret: String(configService.get('JWT_SECRET'))
         })
     };
 }

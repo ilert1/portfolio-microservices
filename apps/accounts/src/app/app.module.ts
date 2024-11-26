@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoConfig } from './configs/mongo.config';
 import { RMQModule } from 'nestjs-rmq';
 import { getRmqConfig } from './configs/rmq.config';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
     imports: [
