@@ -3,7 +3,7 @@ import { compare, genSalt, hash } from 'bcryptjs';
 import { Types } from 'mongoose';
 
 export class UserEntity implements IUser {
-    _id?: Types.ObjectId;
+    _id?: string;
     displayName?: string;
     email: string;
     passwordHash: string;
@@ -27,5 +27,10 @@ export class UserEntity implements IUser {
 
     public async validatePassword(password: string) {
         return compare(password, this.passwordHash);
+    }
+
+    public updateProfile(displayName: string) {
+        this.displayName = displayName;
+        return this;
     }
 }

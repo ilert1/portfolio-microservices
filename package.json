@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "license": "MIT",
     "scripts": {
-        "start:acc": "nx run accounts:serve:development"
+        "start:acc": "nx run accounts:serve:development --verbose"
     },
     "private": true,
     "dependencies": {

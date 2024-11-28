@@ -19,7 +19,8 @@ export class AuthService {
             displayName,
             email,
             passwordHash: '',
-            role: UserRole.STUDENT
+            role: UserRole.STUDENT,
+            courses: []
         }).setPassword(password);
 
         const newUser = await this.userRepository.createUser(newUserEntity);

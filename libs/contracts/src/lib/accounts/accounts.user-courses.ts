@@ -7,7 +7,7 @@ export namespace AccountUserCourses {
 
     export class Request {
         @IsString()
-        id!: Types.ObjectId;
+        id!: string;
     }
 
     export class Response {

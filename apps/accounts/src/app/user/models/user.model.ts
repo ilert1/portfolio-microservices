@@ -6,7 +6,7 @@ import { Types } from 'mongoose';
 @Schema()
 export class UserCourses extends Document implements IUserCourses {
     @Prop({ required: true })
-    courseId: Types.ObjectId;
+    courseId: string;
 
     @Prop({ required: true, enum: PurchaseState, type: String })
     purchaseState: PurchaseState;
@@ -17,7 +17,7 @@ export const UserCoursesSchema = SchemaFactory.createForClass(UserCourses);
 @Schema()
 export class User extends Document implements IUser {
     @Prop({ required: false })
-    _id?: Types.ObjectId;
+    _id: string;
 
     @Prop()
     displayName: string;
