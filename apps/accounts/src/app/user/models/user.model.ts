@@ -5,6 +5,9 @@ import { Types } from 'mongoose';
 
 @Schema()
 export class UserCourses extends Document implements IUserCourses {
+    @Prop({ required: false })
+    _id: string;
+
     @Prop({ required: true })
     courseId: string;
 

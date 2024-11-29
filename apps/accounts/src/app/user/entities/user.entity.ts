@@ -1,4 +1,4 @@
-import { IUser, IUserCourses, UserRole } from '@libs/interfaces';
+import { IUser, IUserCourses, PurchaseState, UserRole } from '@libs/interfaces';
 import { compare, genSalt, hash } from 'bcryptjs';
 import { Types } from 'mongoose';
 
@@ -17,6 +17,32 @@ export class UserEntity implements IUser {
         this.email = user.email;
         this.role = user.role;
         this.courses = user.courses;
+    }
+
+    public addCourse(courseId: string) {
+        const exist = this.courses.find(c => courseId === c._id);
+
+        if (exist) {
+            throw new Error('This course is already exists');
+        }
+        this.courses.push({
+            courseId: courseId,
+            purchaseState: PurchaseState.STARTED
+        });
+    }
+
+    public deleteCourse(courseId: string) {
+        this.courses = this.courses.filter(c => c._id !== courseId);
+    }
+
+    public updateCourseStatus(courseId: string, state: PurchaseState) {
+        this.courses = this.courses.map(c => {
+            if (c._id === courseId) {
+                c.purchaseState = state;
+                return c;
+            }
+            return c;
+        });
     }
 
     public async setPassword(password: string) {

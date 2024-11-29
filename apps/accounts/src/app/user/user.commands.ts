@@ -12,10 +12,13 @@ export class UserCommands {
     @RMQRoute(AccountChangeProfile.topic)
     async userInfo(@Body() { user, id }: AccountChangeProfile.Request): Promise<AccountChangeProfile.Response> {
         const oldUser = await this.userRepository.findUserByID(id);
+
         if (!oldUser) {
             throw new NotFoundException('There is no user with this credentials');
         }
+
         const userEntity = new UserEntity(oldUser).updateProfile(user.displayName);
+
         await this.userRepository.updateProfile(userEntity);
         return {};
     }

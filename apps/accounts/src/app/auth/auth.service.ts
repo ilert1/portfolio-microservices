@@ -42,7 +42,7 @@ export class AuthService {
         return { id: user._id };
     }
 
-    async login(id: unknown) {
+    async login(id: string) {
         return {
             access_token: await this.jwtService.signAsync({ id })
         };
