@@ -1,4 +1,5 @@
-import { IUser, IUserCourses, PurchaseState, UserRole } from '@libs/interfaces';
+import { IDomainEvent, IUser, IUserCourses, PurchaseState, UserRole } from '@libs/interfaces';
+import { AccountChangedCourse } from '@portfolio-microservices/contracts';
 import { compare, genSalt, hash } from 'bcryptjs';
 import { Types } from 'mongoose';
 
@@ -9,6 +10,7 @@ export class UserEntity implements IUser {
     passwordHash: string;
     role: UserRole;
     courses: IUserCourses[];
+    events: IDomainEvent[] = [];
 
     constructor(user: IUser) {
         this._id = user._id;
@@ -19,23 +21,19 @@ export class UserEntity implements IUser {
         this.courses = user.courses;
     }
 
-    public addCourse(courseId: string) {
+    public setCourseStatus(courseId: string, state: PurchaseState) {
         const exist = this.courses.find(c => courseId === c._id);
-
-        if (exist) {
-            throw new Error('This course is already exists');
+        if (!exist) {
+            this.courses.push({
+                courseId: courseId,
+                purchaseState: state
+            });
+            return this;
         }
-        this.courses.push({
-            courseId: courseId,
-            purchaseState: PurchaseState.STARTED
-        });
-    }
-
-    public deleteCourse(courseId: string) {
-        this.courses = this.courses.filter(c => c._id !== courseId);
-    }
-
-    public updateCourseStatus(courseId: string, state: PurchaseState) {
+        if (state === PurchaseState.CANCELLED) {
+            this.courses = this.courses.filter(c => c._id !== courseId);
+            return this;
+        }
         this.courses = this.courses.map(c => {
             if (c._id === courseId) {
                 c.purchaseState = state;
@@ -43,6 +41,9 @@ export class UserEntity implements IUser {
             }
             return c;
         });
+
+        this.events.push({ topic: AccountChangedCourse.topic, data: { courseId, userId: this._id, state } });
+        return this;
     }
 
     public async setPassword(password: string) {
